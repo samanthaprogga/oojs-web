@@ -1,0 +1,316 @@
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*  App                                                  */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+:root {
+    --background-dark: rgb(24, 23, 32);
+    --color-purple: rgb(100, 0, 255);
+    --color-purple-dark: rgb(92, 0, 235);
+    --border-radius: 5px;
+  }
+  
+  body {
+    position: relative;
+    background: var(--background-dark) url(../img/bg.png) center / cover no-repeat fixed;
+    font-family: 'Nunito Sans', 'Open Sans', Arial, sans-serif;
+  }
+  
+  body::after {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    min-height: 100%;
+    content: '';
+    background-color: rgb(20 19 25 / 70%);
+    z-index: -1111;
+  }
+  
+  .container {
+    width: min(100% - 30px, 960px);
+    margin-inline: auto;
+  }
+  
+  h1, h2, h3, a, p, input, li {
+    color: #fff;
+  }
+  
+  
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  /*  Main                                                 */
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  
+  main {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+  }
+  
+  section {
+    width: 100%;
+    translate: 0 -3px;
+  }
+  
+  
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  /*  Header                                               */
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  
+  header {
+    text-align: center;
+  }
+    
+  header h1 {
+    line-height: 1;
+    font-size: 3.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    translate: -2px 0;
+  }
+  
+  header p {
+    margin-top: 2px;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: rgb(255 255 255 / 0.75);
+  }
+  
+  
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  /*  Form                                                 */
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  
+  .search {
+    margin-top: 33px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  form {
+    display: flex;
+    gap: 12px;
+    width: 540px;
+  }
+  
+  .queries {
+    position: relative;
+    width: 100%;
+    height: 48px;
+  }
+  
+  .find {
+    width: 120px;
+    height: 48px;
+  }
+  
+  input {
+    display: block;
+    height: 100%;
+    border-radius: var(--border-radius);
+  }
+  
+  input[type=text] {
+    width: 100%;
+    padding: 1px 15px 0 15px;
+    font-size: 1.7rem;
+    font-weight: 600;
+    background-color: rgb(255 255 255 / 0.04);
+    border: 0.5px solid rgb(255 255 255 / 0.07);
+    background-size: 16px;
+  }
+  
+  input[type=button] {
+    padding-top: 1px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+    color: #fff;
+    background-color: var(--color-purple);
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+  }
+  
+  input[type=button]:hover {
+    background-color: var(--color-purple-dark);
+  }
+  
+  
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  /*  Suggestions                                          */
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  
+  .movies-available {
+    display: none;
+    position: absolute;
+    top: 58px;
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    z-index: 9999;
+  }
+  
+  .movies-available.is-visible {
+    display: block;
+  }
+  
+  :is(.movies-available) li {
+    display: block;
+    padding: 11px 15px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--background-dark);
+    cursor: pointer;
+    transition: all 0.05s ease-in-out;
+  }
+  
+  :is(.movies-available) li:hover {
+    background-color: var(--color-purple);
+    color: #fff;
+  }
+  
+  :is(.movies-available) li.not-found:hover {
+    background-color: #fff;
+    color: var(--background-dark);
+    cursor: default;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+  
+  
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  /*  Movie                                                */
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+  
+  .movie-details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin-top: 60px;
+    height: 280px;
+    translate: 0 -6px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.25s ease-in-out;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+  
+  .movie-details.is-visible {
+    translate: 0 0;
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .poster {
+    background-color: transparent;
+  }
+  
+  .poster img {
+    display: block;
+    height: 280px;
+    border-radius: var(--border-radius);
+  }
+  
+  .info {
+    padding: 0 20px;
+  }
+  
+  .info h2 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  
+  .info p {
+    font-size: 1.8rem;
+    line-height: 1.6;
+  }
+  
+  .info p span {
+    position: relative;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: rgb(255 255 255 / 0.7);
+  }
+  
+  .info-p span + span {
+    padding-left: 25px;
+  }
+  
+  .info-p span + span::before {
+    position: absolute;
+    font-size: 1.3rem;
+    color: rgb(0 255 100 / 0.9);
+    line-height: 1;
+    content: '\2022';
+    width: 100%;
+    height: 100%;
+    bottom: 0.5px;
+    left: 9px;
+    display: inline-flex;
+    align-content: center;
+    align-items: center;
+  }
+  
+  .info p:nth-of-type(1) {
+    margin-top: 2px;
+    font-size: 1.6rem;
+  }
+  
+  .info p:nth-of-type(2) {
+    margin-top: 23px;
+    letter-spacing: 0.4px;
+  }
+  
+  .tags + .tags {
+    margin-left: 10px;
+  }
+  
+  p.genre-list {
+    margin-top: 28px;
+  }
+  
+  .genre-list span {
+    padding: 2px 12px;
+    background-color: rgb(255 255 255 / 0.04);
+    border: 0.5px solid rgb(255 255 255 / 0.07);
+    border-radius: 50px;
+  }
+  
+  .genre-list span + span {
+    margin-left: 10px;
+  }
+  
+  .info button {
+    margin-top: 29px;
+  }
+  
+  button {
+    padding: 0 14px;
+    height: 44px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--color-purple);
+    border-radius: var(--border-radius);
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .play {
+    display: inline;
+    position: relative;
+    top: 1.5px;
+    font-size: 1.3rem;
+  }
+  
+  .info button span {
+    margin-left: 8px;
+  }
+  
+  html {}
+  
+  .button {}
